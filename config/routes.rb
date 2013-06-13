@@ -1,11 +1,15 @@
 Omrails::Application.routes.draw do
+  get "users/show"
+
   resources :pins
 
-
   devise_for :users
+  # "match" must be below "devise_for" otherwise when editing
+  # a user, users/edit (URL) would interpret :id as "edit".. it's
+  # a devise thing
+  match 'users/:id' => 'users#show', as: :user
 
   get 'about' => 'pages#about'
-
 
   root :to => 'pins#index'
 
